@@ -11,10 +11,12 @@ exports.proyectosHome = async (req, res) => {
 
 exports.formularioProyecto = async (req, res) => {
     const proyectos = await Proyectos.findAll();
+    const proyecto = {}
 
     res.render('nuevoProyecto', {
         nombrePagina: 'Nuevo Proyecto',
-        proyectos
+        proyectos,
+        proyecto
     });
 }
 
@@ -84,3 +86,34 @@ exports.formularioEditar = async (req, res) => {
         proyecto
     })
 }
+
+exports.actualizarProyecto = async (req, res) => {
+    const proyectos = await Proyectos.findAll();
+    console.log(req.body.nombre);
+    console.log(req.params.id);
+
+    // Validar que tengamos algo en el input
+    const { nombre } = req.body;
+
+    let errores = [];
+
+    if(!nombre) {
+        errores.push({'texto': 'Agrega un Nombre al Proyecto'});
+    }
+
+    //si hay errores
+    if(errores.length > 0) {
+        res.render('nuevoProyecto', {
+            nombrePagina: 'Nuevo Proyecto',
+            proyectos,
+            errores
+        });
+    } else {
+        //Inserción en BD
+        const proyecto = await Proyectos.update(
+            { nombre: nombre },
+            {where: { id: req.params.id }
+        });
+        res.redirect('/');
+    }
+} 
