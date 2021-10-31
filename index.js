@@ -3,6 +3,9 @@ const routes = require('./routes');
 const path = require ('path');
 const bodyParser = require('body-parser');
 
+// Helpers con funciones
+const helpers = require('./helpers')
+
 // Crear conexion a BD
 const db = require('./config/db');
 
@@ -24,6 +27,13 @@ app.set('view engine', 'pug');
 
 //Añadir la carpeta de las vistas
 app.set('views', path.join(__dirname, './views'));
+
+// Pasar var dump a la aplicación
+app.use((req, res, next) => {
+    res.locals.vardump = helpers.vardump;
+    next();
+
+});
 
 // Habilitar bodyParser para leer datos del formulario
 app.use(express.urlencoded({extended: true}));

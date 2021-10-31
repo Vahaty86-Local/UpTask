@@ -1,5 +1,8 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
+const slug = require('slug');
+const shortId = require('shortid');
+
 const Proyectos = db.define('proyectos', {
     id: {
         type: Sequelize.INTEGER,
@@ -8,6 +11,14 @@ const Proyectos = db.define('proyectos', {
     },
     nombre: Sequelize.STRING,
     url: Sequelize.STRING
+}, {
+    hooks: {
+        beforeCreate(proyectoParam) {
+            const url = slug(proyectoParam.nombre).toLowerCase();
+            
+            proyectoParam.url = `${url}-${shortId.generate()}`;
+        }
+    }
 });
 
 module.exports = Proyectos;
