@@ -32,7 +32,9 @@ module.exports = function() {
 
     routes.delete('/proyectos/:url', proyectosController.eliminarProyecto);
 
-    routes.post("/proyectos/:url", tareasController.agregarTarea)
+    routes.post('/proyectos/:url', tareasController.agregarTarea);
+
+    routes.patch('/tareas/:id', tareasController.cambiarEstadoTarea);
 
     return routes;
 }
