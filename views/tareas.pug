@@ -11,9 +11,21 @@ block contenido
             .campo.enviar 
                 input.boton.nueva-tarea(type="submit" value="Agregar")
 
-        //TODO: Listado pendiente
-
-        //TODO: Acciones que se pueden realizar
+        .listado-pendientes 
+            ul
+                if tareas.length > 0
+                    each tarea in tareas
+                        li.tarea
+                            p= tarea.tarea
+                            .acciones
+                                if tarea.estado != 0
+                                    i.far.fa-check-circle.completo
+                                else 
+                                    i.far.fa-check-circle
+                                i.fas.fa-trash
+                else 
+                    p No hay tareas en este proyecto
+ 
         .contenedor-acciones
             a(href=`/proyecto/editar/${proyecto.id}`  class="boton") Editar Proyecto
             button#eliminar-proyecto(data-proyecto-url=proyecto.url type='button' class="boton eliminar") Eliminar Proyecto
