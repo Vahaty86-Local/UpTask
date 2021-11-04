@@ -11,6 +11,11 @@ block contenido
             .campo.enviar 
                 input.boton.nueva-tarea(type="submit" value="Agregar")
 
+        .avance
+            h2 Avance del proyecto
+            #barra-avance.barra-avance
+                #porcentaje.porcentaje
+
         .listado-pendientes 
             ul
                 if tareas.length > 0

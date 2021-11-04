@@ -6,8 +6,8 @@ exports.agregarTarea = async (req, res) => {
         where: {url: req.params.url}
     });
 
-    const {tarea} = req.body;
-    const {id} = proyecto;
+    const { tarea } = req.body;
+    const { id } = proyecto;
     const estado = 0;
 
     const resultado = await Tareas.create({tarea: tarea, estado: estado, proyectoId: id});
@@ -20,5 +20,27 @@ exports.agregarTarea = async (req, res) => {
 }
 
 exports.cambiarEstadoTarea = async (req, res) => {
-    res.send('Everything ok');
+    const { id } = req.params;
+    const tarea = await Tareas.findOne({ where: {id} });
+    let { estado } = tarea;
+
+    const resultado = await Tareas.update(
+        {estado: estado == 0 ? 1 : 0},
+        {where: {id: id}});
+
+    if(!resultado) {
+        return next();
+    }
+
+    res.status(200).send('Tarea Actualizada Correctamente');
+}
+
+exports.eliminarTarea = async (req, res) => {
+    const { idTarea } = req.query;
+    
+    const respuesta = await Tareas.destroy({where: {id: idTarea}});
+
+    if(!respuesta) return next();
+    
+    res.status(200).send('Tarea Eliminada Correctamente');
 }

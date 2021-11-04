@@ -126,8 +126,6 @@ exports.actualizarProyecto = async (req, res) => {
 }
 
 exports.eliminarProyecto = async (req, res, next) => {
-    console.log(req.params);
-    console.log(req.query);
     const {urlProyecto} = req.query;
 
     const resultado = await Proyectos.destroy({where: {url: urlProyecto}});
