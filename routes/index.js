@@ -31,16 +31,17 @@ module.exports = function() {
             .escape(),
         proyectosController.actualizarProyecto)
 
+    // Gestionar proyectos
     routes.delete('/proyectos/:url', proyectosController.eliminarProyecto);
-
     routes.post('/proyectos/:url', tareasController.agregarTarea);
 
+    // Gestionar tareas
     routes.patch('/tareas/:id', tareasController.cambiarEstadoTarea);
-
     routes.delete('/tareas/:id', tareasController.eliminarTarea);
 
-    //Crear nueva cuenta
+    //Gestionar cuentas
     routes.get('/crear-cuenta', usuariosController.formCrearCuenta);
+    routes.post('/crear-cuenta', usuariosController.crearCuenta);
 
     return routes;
 }

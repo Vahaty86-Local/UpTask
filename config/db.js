@@ -1,9 +1,9 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('uptasknode', 'root', 'gaviota6', {
-    host: 'localhost',
+    host: '127.0.0.1',
     dialect: 'mysql',
-    port: 3306,
+    port: 33060,
     define: {
         timestamps: false
     }
