@@ -4,13 +4,14 @@ html(lang="en")
         include partials/header
     body 
         header.barra 
-            h1 UpTask - Administador de Proyectos 
-            a(href="#") Cerrar sesión
+            h1 UpTask - Administador de Proyectos
+            p #{usuario}
+            a(href="/cerrar-sesion") Cerrar sesión
 
         main.contenedor 
             aside.contenedor-proyectos 
                 .panel.crear-proyecto 
-                    a(href="/nuevo-proyecto" class="boton") Nuevo Proyecto 
+                    a(href="/nuevo-proyecto" class="boton proyecto-boton") Nuevo Proyecto 
                         span + 
                 .panel.lista-proyectos
                     h2 Proyectos 

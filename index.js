@@ -2,6 +2,10 @@ const express = require('express');
 const routes = require('./routes');
 const path = require ('path');
 const bodyParser = require('body-parser');
+const flash = require('connect-flash');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const passport = require('./config/passport');
 
 // Helpers con funciones
 const helpers = require('./helpers')
@@ -30,11 +34,29 @@ app.set('view engine', 'pug');
 //Añadir la carpeta de las vistas
 app.set('views', path.join(__dirname, './views'));
 
+// Agregar flash message
+app.use(flash());
+
+// Agrega cookies
+app.use(cookieParser());
+
+// Añadir sesión para navegar entre paginas sin autenticar
+app.use(session({
+    secret: 'supersecret',
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Pasar var dump a la aplicación
 app.use((req, res, next) => {
     res.locals.vardump = helpers.vardump;
+    res.locals.mensajes = req.flash();
+    res.locals.usuario = {...req.user} || null;
+    console.log(res.locals.usuario);
     next();
-
 });
 
 // Habilitar bodyParser para leer datos del formulario

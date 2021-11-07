@@ -2,27 +2,32 @@ const Proyectos = require('../models/Proyectos');
 const Tareas = require("../models/Tareas");
 
 exports.proyectosHome = async (req, res) => {
-    const proyectos = await Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
 
     res.render('index', {
         nombrePagina: 'Proyectos',
+        usuario: res.locals.usuario.email,
         proyectos
     });
 }
 
 exports.formularioProyecto = async (req, res) => {
-    const proyectos = await Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
     const proyecto = {}
 
     res.render('nuevoProyecto', {
         nombrePagina: 'Nuevo Proyecto',
+        usuario: res.locals.usuario.email,
         proyectos,
         proyecto
     });
 }
 
 exports.nuevoProyecto = async (req, res) => {
-    const proyectos = await Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
 
     // Validar que tengamos algo en el input
     const { nombre } = req.body;
@@ -37,19 +42,20 @@ exports.nuevoProyecto = async (req, res) => {
     if(errores.length > 0) {
         res.render('nuevoProyecto', {
             nombrePagina: 'Nuevo Proyecto',
+            usuario: res.locals.usuario.email,
             proyectos,
             errores
         });
     } else {
         //Inserción en BD
-        const proyecto = await Proyectos.create({ nombre });
+        const proyecto = await Proyectos.create({ nombre, usuarioId });
         res.redirect('/');
     }
 } 
 
 exports.proyectoPorUrl = async (req, res, next) => {
-
-    const proyectosPromise = Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectosPromise = Proyectos.findAll({where: {usuarioId}});
 
     const proyectoPromise = Proyectos.findOne({
         where: {
@@ -70,6 +76,7 @@ exports.proyectoPorUrl = async (req, res, next) => {
     
     res.render('tareas', {
         nombrePagina: 'Tareas del Proyecto',
+        usuario: res.locals.usuario.email,
         proyectos,
         proyecto,
         tareas
@@ -77,7 +84,8 @@ exports.proyectoPorUrl = async (req, res, next) => {
 }
 
 exports.formularioEditar = async (req, res) => {
-    const proyectosPromise = Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectosPromise = Proyectos.findAll({where: {usuarioId}});
 
     const proyectoPromise = Proyectos.findOne({
         where: {
@@ -89,13 +97,15 @@ exports.formularioEditar = async (req, res) => {
 
     res.render("nuevoProyecto", {
         nombrePagina: 'Editar Proyecto',
+        usuario: res.locals.usuario.email,
         proyectos,
         proyecto
     })
 }
 
 exports.actualizarProyecto = async (req, res) => {
-    const proyectos = await Proyectos.findAll();
+    const usuarioId = res.locals.usuario.id;
+    const proyectos = await Proyectos.findAll({where: {usuarioId}});
     console.log(req.body.nombre);
     console.log(req.params.id);
 
@@ -112,6 +122,7 @@ exports.actualizarProyecto = async (req, res) => {
     if(errores.length > 0) {
         res.render('nuevoProyecto', {
             nombrePagina: 'Nuevo Proyecto',
+            usuario: res.locals.usuario.email,
             proyectos,
             errores
         });

@@ -7,7 +7,7 @@ block contenido
         h1 #{nombrePagina}
         if errores
             each error in errores
-                .alerta.error=error.texto
+                .alerta.error.proyecto-error #{error.texto}
         
         +crearProyecto(proyecto)
 
