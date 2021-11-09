@@ -106,8 +106,7 @@ exports.formularioEditar = async (req, res) => {
 exports.actualizarProyecto = async (req, res) => {
     const usuarioId = res.locals.usuario.id;
     const proyectos = await Proyectos.findAll({where: {usuarioId}});
-    console.log(req.body.nombre);
-    console.log(req.params.id);
+
 
     // Validar que tengamos algo en el input
     const { nombre } = req.body;

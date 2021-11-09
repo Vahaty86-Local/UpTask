@@ -5,7 +5,6 @@ import { actualizarAvance } from "../funciones/avance";
 
 if(tareas) {
     tareas.addEventListener('click', (e) => {
-        console.log(e.target.classList); 
         if(e.target.classList.contains('fa-check-circle')){
             const icon = e.target;
             const idTarea = icon.parentElement.parentElement.dataset.tarea;
@@ -13,7 +12,6 @@ if(tareas) {
 
             axios.patch(url, {params: {idTarea}})
                 .then(function(respuesta) {
-                    console.log(respuesta);
                     if(respuesta.status === 200) {
                         icon.classList.toggle('completo');
                         actualizarAvance(true);

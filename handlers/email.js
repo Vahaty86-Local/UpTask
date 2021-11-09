@@ -14,13 +14,22 @@ var transport = nodemailer.createTransport({
     }
 });
 
-// send mail with defined transport object
-let mailOptions = {
-    from: 'UpTask <no-reply@uptask.com>',
-    to: "correo@correo.com",
-    subject: "Password Reset",
-    text: "Hola",
-    html: "<b>hola</b>",
-};
+//Generar html
+const generarHTML = (archivo, opciones = {}) => {
+  const html = pug.renderFile(`${__dirname}/../views/emails/${archivo}.pug`, opciones);
+  return juice(html);
+} 
 
-transport.sendMail(mailOptions);
+exports.enviar = async (opciones) => {
+
+  const html = generarHTML(opciones.archivo, opciones);
+  const text = htmlToText.htmlToText(html);
+
+  await transport.sendMail ({
+    from: 'UpTask <no-reply@uptask.com>',
+    to: opciones.usuario.email,
+    subject: opciones.subject,
+    text,
+    html
+  });
+}

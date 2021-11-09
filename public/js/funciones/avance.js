@@ -6,11 +6,9 @@ export const actualizarAvance = (mostrar) => {
     if ( tareas.length ) {
         const tareasCompletas = document.querySelectorAll('i.completo');
 
-        //console.log('TC: ' + tareasCompletas + ' T: ' + tareas);
         const percent = porcentaje(tareasCompletas.length, tareas.length);
         const percentHtml = document.querySelector('#porcentaje');
 
-        console.log('ENTRO PERFECTO: ' + percent);
         percentHtml.style.width = percent + '%';
 
         if(percent === 100 && mostrar) {
