@@ -272,6 +272,8 @@ body.index {
 }
 .correcto p {
     color: green;
+    max-width: 350px;
+    font-size: .9rem;
 }
 
 /** Linea de Avance **/
