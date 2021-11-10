@@ -1,9 +1,10 @@
 const { Sequelize } = require('sequelize');
+require('dotenv').config({path: 'variables.env'});
 
-const sequelize = new Sequelize('uptasknode', 'root', 'gaviota6', {
-    host: '127.0.0.1',
+const sequelize = new Sequelize(process.env.BD_NOMBRE, process.env.BD_USER, process.env.BD_PASS, {
+    host: process.env.BD_HOST,
     dialect: 'mysql',
-    port: 33060,
+    port: process.env.BD_PORT,
     define: {
         timestamps: false
     }

@@ -87,5 +87,8 @@ module.exports = function() {
     routes.get('/reestablecer/:token', authController.validarToken);
     routes.post('/reestablecer/:token', authController.actualizarPassword);
 
+    // --------- Confirmar cuenta ---------
+    routes.get('/confirmar/:email', usuariosController.confirmarCuenta);
+
     return routes;
 }

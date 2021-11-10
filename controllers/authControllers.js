@@ -59,7 +59,7 @@ exports.enviarToken = async (req, res) => {
     });
 
     req.flash('correcto', 'Email enviado');
-        res.redirect('/iniciar-sesion');
+    res.redirect('/iniciar-sesion');
 };
 
 exports.validarToken = async (req, res) => {
